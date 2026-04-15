@@ -1,60 +1,76 @@
 # 🚀 RISC-V Processor Design: Single-Cycle & Pipelined
 
-Welcome to the **RISC-V Processor Design** repository. [cite_start]This project features a full Verilog implementation of a functional RISC-V CPU[cite: 7, 33]. [cite_start]Developed for the **CSC311: Introduction to Computer Architecture** course at **Nile University (ITCS)**, Fall '25[cite: 2, 3, 4].
-
-## 🏗️ Architectural Overview
-
-This project transitioned from a foundational architecture to an optimized, high-performance design:
-
-1.  [cite_start]**Single-Cycle Core:** A complete datapath where every instruction executes in one clock cycle[cite: 7, 57]. [cite_start]It features a merged Control Unit for optimized logic[cite: 10, 59].
-2.  **Pipelined Core (Advanced):** An evolution of the design into a 5-stage pipeline to increase instruction throughput, handling concurrent execution stages (Fetch, Decode, Execute, Memory, Write-back).
+This repository presents a Verilog-based implementation of a **RISC-V processor**, demonstrating the progression from a basic **single-cycle architecture** to a more efficient **5-stage pipelined design**. The project highlights key concepts in computer architecture, including performance optimization, modular hardware design, and instruction execution flow.
 
 ---
 
-## 👥 The Team & Contributions
+## 🏗️ Architectural Overview
 
-[cite_start]Following the project's modular design, each member specialized in a critical hardware component[cite: 185, 186]:
+Two processor designs are implemented to illustrate architectural evolution:
 
-| Task | Lead Member | Component & Responsibilities |
+### 1. Single-Cycle Core
+- Executes each instruction in a single clock cycle.
+- Utilizes a **merged control unit** (combining main control and ALU control) to simplify logic.
+- Supports 64-bit memory operations such as `ld` (load) and `sd` (store).
+
+### 2. Pipelined Core (Advanced)
+- Improves performance by dividing execution into five stages:
+  - **IF** (Instruction Fetch)  
+  - **ID** (Instruction Decode)  
+  - **EX** (Execute)  
+  - **MEM** (Memory Access)  
+  - **WB** (Write Back)  
+- Enables overlapping instruction execution for higher throughput.
+- Designed to enhance clock efficiency and overall performance.
+
+---
+
+## 👥 Team Contributions
+
+The project was divided into modular components, with each member responsible for a key subsystem:
+
+| Task | Member | Responsibilities |
 | :--- | :--- | :--- |
-| **Task 1** | **Farah Awadalla** | [cite_start]**ALU & Arithmetic Logic:** Implementing R-type and shift operations (add, sub, and, or, xor, sll, srl)[cite: 187, 188, 189, 190, 191]. |
-| **Task 2** | **Mariam Mahmoud** | [cite_start]**Control Unit:** Merged Main & ALU Control to generate all internal signals (RegWrite, MemRead, ALUSrc, etc.)[cite: 197, 198, 205]. |
-| **Task 3** | **Shaza** | [cite_start]**RegFile & ImmGen:** Managing 32 registers (x0=0) and sign-extension for 64-bit immediates[cite: 211, 213, 214, 215, 218, 219]. |
-| **Task 4** | **Taghreed Oyoun** | [cite_start]**PC & Branch Logic:** Designing instruction sequencing, branch target calculation, and next-PC selection[cite: 225, 226, 227, 229, 230, 231]. |
-| **Task 5** | **Dalia Nassar** | [cite_start]**Integration:** Top-level module integration, instruction/data memory management, and full-core simulation[cite: 236, 244, 245, 252, 256]. |
+| **Task 1** | **Farah Awadalla** | ALU design and implementation of arithmetic and logic operations (`add`, `sub`, `and`, `or`, `xor`, `sll`, `srl`) |
+| **Task 2** | **Mariam Mahmoud** | Control unit design, instruction decoding, and generation of control signals |
+| **Task 3** | **Shaza** | Register file (32 registers) and immediate generator for 64-bit values |
+| **Task 4** | **Taghreed Oyoun** | Program counter logic, branching, and next-instruction selection |
+| **Task 5** | **Dalia Nassar** | System integration, memory handling, and full processor simulation |
 
 ---
 
 ## 🛠️ Technical Specifications
 
 ### Supported Instruction Set
-[cite_start]The processor handles the following RISC-V instruction categories[cite: 36]:
-* [cite_start]**Integer R-Type:** `add`, `sub`, `and`, `or`, `xor`[cite: 37, 40, 41].
-* [cite_start]**Logical Shifts:** `sll`, `srl`, `slli`, `srli`[cite: 42, 47].
-* [cite_start]**I-Type Arithmetic:** `addi`, `andi`, `ori`, `xori`[cite: 43, 44].
-* [cite_start]**Memory Access:** `ld` (Load) and `sd` (Store) using 64-bit doubleword operations[cite: 49, 50, 52, 54].
-* [cite_start]**Control Flow:** `beq` (Branch if Equal)[cite: 55, 56].
 
-### Hardware Design Highlights
-* [cite_start]**Merged Control Unit:** Directly generates `ALUControl` from opcode, funct3, and funct7[cite: 209].
-* [cite_start]**Synchronous Memory:** Register file uses synchronous writes and asynchronous reads[cite: 217].
-* [cite_start]**Word-Aligned Addressing:** Optimized for 64-bit data memory and instruction fetching[cite: 240, 243].
+- **R-Type:** `add`, `sub`, `and`, `or`, `xor`, `sll`, `srl`  
+- **I-Type Arithmetic:** `addi`, `andi`, `ori`, `xori`  
+- **Memory Access:** `ld`, `sd` (64-bit support)  
+- **Control Flow:** `beq` (branch if equal)  
 
----
+### Implementation Details
 
-## 💻 Simulation & Verification
-
-* [cite_start]**Language:** Verilog HDL[cite: 33].
-* [cite_start]**Simulator:** Vivado Design Suite[cite: 32, 33].
-* [cite_start]**Deliverables:** Includes full simulation waveforms showing PC updates, register writes, and ALU outputs[cite: 126, 129, 132, 134, 147].
-
-### How to Run
-1.  Clone this repository.
-2.  Open **Vivado** and import the source files from the `src/` directory.
-3.  [cite_start]Load the machine code into the **Instruction Memory** module[cite: 160, 166].
-4.  [cite_start]Run the top-level testbench to verify correct execution of the test program[cite: 257, 258].
+- **Word-aligned memory addressing** for both instruction and data memory  
+- **Synchronous design** with:
+  - Synchronous writes to the register file  
+  - Asynchronous reads from the register file  
+- Modular and scalable hardware structure  
 
 ---
 
-## 📜 Academic Integrity
-[cite_start]All work submitted in this repository was developed by the team members mentioned above[cite: 264]. [cite_start]External sources or code copying were strictly prohibited per Nile University policy[cite: 265].
+## 💻 Simulation & Tools
+
+- **Hardware Description Language:** Verilog  
+- **Development Environment:** Xilinx Vivado (Simulation Mode)  
+- **Verification:** Comprehensive testbenches validating:
+  - Program counter behavior  
+  - ALU operations  
+  - Memory read/write correctness  
+
+---
+
+## ▶️ Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone <repo-url>
