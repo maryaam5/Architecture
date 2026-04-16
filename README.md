@@ -73,4 +73,4 @@ The project was divided into modular components, with each member responsible fo
 
 1. Clone the repository:
    ```bash
-   git clone <repo-url>
+   git clone <https://github.com/maryaam5/Architecture>
